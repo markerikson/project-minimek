@@ -4522,6 +4522,10 @@ redux:
     loose-envify "^1.1.0"
     symbol-observable "^1.0.2"
 
+redux-devtools-extension:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-1.0.0.tgz#f8bf7a2a093b648054a3814d6d120ad8bc8beaa9"
+
 redux-orm:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/redux-orm/-/redux-orm-0.8.4.tgz#9efc583771c04d66e6c601844a841f5d95c3cf5a"
