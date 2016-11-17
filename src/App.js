@@ -4,11 +4,11 @@ import {
     Container,
 } from "semantic-ui-react";
 
-import TabBar from "./components/TabBar";
-import UnitInfo from "./features/unitInfo/UnitInfo";
-import Pilots from "./features/pilots/Pilots";
-import Mechs from "./features/mechs/Mechs";
-import UnitOrganization from "./features/unitOrganization/UnitOrganization";
+import TabBar from "components/TabBar";
+import UnitInfo from "features/unitInfo/UnitInfo";
+import Pilots from "features/pilots/Pilots";
+import Mechs from "features/mechs/Mechs";
+import UnitOrganization from "features/unitOrganization/UnitOrganization";
 
 import './App.css';
 
