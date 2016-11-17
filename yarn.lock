@@ -4757,9 +4757,9 @@ semantic-ui-css:
   dependencies:
     jquery x.*
 
-semantic-ui-react:
-  version "0.60.9"
-  resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.60.9.tgz#3e712f3e1832fd8f81fb62303c652c07f0a87882"
+semantic-ui-react@latest:
+  version "0.61.0"
+  resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.61.0.tgz#17222d394dddc2fa02153815310be0495458848c"
   dependencies:
     classnames "^2.1.5"
     debug "^2.3.2"
