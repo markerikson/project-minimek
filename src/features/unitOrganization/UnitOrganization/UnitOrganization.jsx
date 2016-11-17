@@ -1,0 +1,5 @@
+import React, {Component} from "react";
+
+const UnitOrganization = () => <div>Unit Organization content</div>;
+
+export default UnitOrganization;
