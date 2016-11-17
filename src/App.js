@@ -4,7 +4,7 @@ import {
     Container,
 } from "semantic-ui-react";
 
-import TabBar from "components/TabBar";
+import TabContainer from "features/tabs/TabContainer";
 import UnitInfo from "features/unitInfo/UnitInfo";
 import Pilots from "features/pilots/Pilots";
 import Mechs from "features/mechs/Mechs";
@@ -28,7 +28,7 @@ class App extends Component {
                     <Header inverted as="h1">Project Mini-Mek</Header>
                 </div>
                 <Container>
-                    <TabBar tabs={tabs} />
+                    <TabContainer tabs={tabs} />
                 </Container>
             </div>
         );
