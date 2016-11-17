@@ -59,7 +59,7 @@ const Pilots = () => {
                                     Natasha Kerensky
                                 </Table.Cell>
                                 <Table.Cell>
-                                    Colonel
+                                    Captain
                                 </Table.Cell>
                                 <Table.Cell>
                                     34
@@ -92,7 +92,7 @@ const Pilots = () => {
                                     fluid
                                     selection
                                     options={RANKS}
-                                    value="Colonel"
+                                    value="Captain"
                                 />
                             </Form.Field>
                             <Form.Field name="age" width={6} >

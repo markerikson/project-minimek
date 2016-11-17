@@ -6,7 +6,6 @@ import {
     Segment,
     Header,
     Form,
-    Dropdown,
 } from "semantic-ui-react";
 
 const Mechs = () => {

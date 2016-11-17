@@ -7,6 +7,7 @@ const FACTIONS = [
     {value : "fs", text : "Federated Suns"},
     {value : "fwl", text : "Free Worlds League"},
     {value : "lc", text : "Lyran Commonwealth"},
+    {value : "wd", text : "Wolf's Dragoons"}
 ];
 
 const UnitInfo = () => {
@@ -16,13 +17,14 @@ const UnitInfo = () => {
             <Form size="large">
                 <Form.Field name="name" width={6} >
                     <label>Unit Name</label>
-                    <input placeholder="Name" />
+                    <input placeholder="Name" value="Black Widow Company"/>
                 </Form.Field>
                 <Form.Field name="affiliation" width={6}>
                     <label>Affiliation</label>
                     <Dropdown
                        selection
                        options={FACTIONS}
+                       value="wd"
                     />
                 </Form.Field>
             </Form>
