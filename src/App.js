@@ -28,7 +28,7 @@ class App extends Component {
                     <Header inverted as="h1">Project Mini-Mek</Header>
                 </div>
                 <Container>
-                    <TabContainer tabs={tabs} />
+                    <TabContainer tabs={tabs} size="massive"/>
                 </Container>
             </div>
         );
