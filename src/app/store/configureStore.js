@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import thunk from "redux-thunk";
 
-import rootReducer from "../reducers/rootReducer";
+import rootReducer from "app/reducers/rootReducer";
 
 export default function configureStore(preloadedState) {
     const middlewares = [thunk];
@@ -21,8 +21,8 @@ export default function configureStore(preloadedState) {
 
     if(process.env.NODE_ENV !== "production") {
         if(module.hot) {
-            module.hot.accept("../reducers/rootReducer", () =>{
-                const newRootReducer = require("../reducers/rootReducer").default;
+            module.hot.accept("app/reducers/rootReducer", () =>{
+                const newRootReducer = require("app/reducers/rootReducer").default;
                 store.replaceReducer(newRootReducer)
             });
         }
