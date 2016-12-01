@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {
     Form,
     Dropdown,
-    Segment
+    Segment,
+    Grid,
 } from "semantic-ui-react";
 
 import {selectUnitInfo} from "../unitInfoSelectors";
@@ -30,20 +31,24 @@ class UnitInfo extends Component {
 
         return (
             <Segment attached="bottom">
-                <Form size="large">
-                    <Form.Field name="name" width={6}>
-                        <label>Unit Name</label>
-                        <input placeholder="Name" value={name}/>
-                    </Form.Field>
-                    <Form.Field name="affiliation" width={6}>
-                        <label>Affiliation</label>
-                        <Dropdown
-                            selection
-                            options={FACTIONS}
-                            value={affiliation}
-                        />
-                    </Form.Field>
-                </Form>
+                <Grid width={16}>
+                    <Grid.Column width={6}>
+                        <Form size="large">
+                            <Form.Field name="name">
+                                <label>Unit Name</label>
+                                <input placeholder="Name" value={name}/>
+                            </Form.Field>
+                            <Form.Field name="affiliation">
+                                <label>Affiliation</label>
+                                <Dropdown
+                                    selection
+                                    options={FACTIONS}
+                                    value={affiliation}
+                                />
+                            </Form.Field>
+                        </Form>
+                    </Grid.Column>
+                </Grid>
             </Segment>
         );
     }
