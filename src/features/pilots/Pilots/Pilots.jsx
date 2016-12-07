@@ -7,28 +7,41 @@ import {
     Header,
 } from "semantic-ui-react";
 
+import schema from "app/schema";
+
 
 import PilotsList from "../PilotsList";
 import PilotDetails from "../PilotDetails";
 
-const pilots = [
-    {
-        name : "Natasha Kerensky",
-        rank : "Captain",
-        age : 52,
-        gunnery : 2,
-        piloting : 3,
-        mechType : "WHM-6R",
-    }
-];
+
+
+const mapState = (state) => {
+    // Create a Redux-ORM Session from our "entities" slice, which
+    // contains the "tables" for each model type
+    const session = schema.from(state.entities);
+
+    // Retrieve the model class that we need.  Each Session
+    // specifically "binds" model classes to itself, so that
+    // updates to model instances are applied to that session.
+    // These "bound classes" are available as fields in the sesssion.
+    const {Pilot} = session;
+
+    // Query the session for all Pilot instances.
+    // The QuerySet that is returned from all() can be used to
+    // retrieve instances of the Pilot class, or retrieve the
+    // plain JS objects that are actually in the store.
+    // The toRefArray() method will give us an array of the
+    // plain JS objects for each item in the QuerySet.
+    const pilots = Pilot.all().toRefArray();
+
+    // Now that we have an array of all pilot objects, return it as a prop
+    return {pilots};
+}
 
 export class Pilots extends Component {
-    state = {
-        pilots : pilots,
-    }
 
     render() {
-        const {pilots} = this.state;
+        const {pilots = []} = this.props;
 
         // Use the first pilot as the "current" one for display, if available.
         const currentPilot = pilots[0] || {};
@@ -52,4 +65,4 @@ export class Pilots extends Component {
     }
 }
 
-export default connect()(Pilots);
+export default connect(mapState)(Pilots);
