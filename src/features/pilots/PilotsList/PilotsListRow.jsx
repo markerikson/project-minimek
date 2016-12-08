@@ -1,22 +1,23 @@
 import React from "react";
 import {Table} from "semantic-ui-react";
+import _ from "lodash";
 
-const PilotsListRow = ({name, rank, age, gunnery, piloting, mechType}) => (
-    <Table.Row>
+const PilotsListRow = ({pilot={}, onPilotClicked=_.noop, selected}) => (
+    <Table.Row onClick={() => onPilotClicked(pilot.id)} active={selected}>
         <Table.Cell>
-            {name}
+            {pilot.name}
         </Table.Cell>
         <Table.Cell>
-            {rank}
+            {pilot.rank}
         </Table.Cell>
         <Table.Cell>
-            {age}
+            {pilot.age}
         </Table.Cell>
         <Table.Cell>
-            {gunnery}/{piloting}
+            {pilot.gunnery}/{pilot.piloting}
         </Table.Cell>
         <Table.Cell>
-            {mechType}
+            {pilot.mechType}
         </Table.Cell>
     </Table.Row>
 );

@@ -15,13 +15,14 @@ const MECHS = [
     {value : "WHM-6R", text : "Warhammer WHM-6R"}
 ];
 
-const PilotDetails = ({name, rank, age, gunnery, piloting, mechType}) => (
+
+const PilotDetails = ({pilot={}}) => (
     <Form size="large">
         <Form.Field name="name" width={16}>
             <label>Name</label>
             <input
                 placeholder="Name"
-                value={name}
+                value={pilot.name || ""}
             />
         </Form.Field>
         <Form.Field name="rank" width={16}>
@@ -30,26 +31,26 @@ const PilotDetails = ({name, rank, age, gunnery, piloting, mechType}) => (
                 fluid
                 selection
                 options={RANKS}
-                value={rank}
+                value={pilot.rank || ""}
             />
         </Form.Field>
         <Form.Field name="age" width={6}>
             <label>Age</label>
             <input
                 placeholder="Age"
-                value={age}
+                value={pilot.age || ""}
             />
         </Form.Field>
         <Form.Field name="gunnery" width={6}>
             <label>Gunnery</label>
             <input
-                value={gunnery}
+                value={pilot.gunnery || ""}
             />
         </Form.Field>
         <Form.Field name="piloting" width={6}>
             <label>Piloting</label>
             <input
-                value={piloting}
+                value={pilot.piloting || ""}
             />
         </Form.Field>
         <Form.Field name="mech" width={16}>
@@ -58,7 +59,7 @@ const PilotDetails = ({name, rank, age, gunnery, piloting, mechType}) => (
                 fluid
                 selection
                 options={MECHS}
-                value={mechType}
+                value={pilot.mechType || ""}
             />
         </Form.Field>
     </Form>

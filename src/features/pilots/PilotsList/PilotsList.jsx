@@ -7,12 +7,17 @@ import PilotsListRow from "./PilotsListRow";
 
 export default class PilotsList extends Component {
     render() {
-        const {pilots} = this.props;
+        const {pilots, onPilotClicked, currentPilot} = this.props;
 
         const pilotRows = pilots.map(pilot => (
-            <PilotsListRow {...pilot} key={pilot.name}/>
+            <PilotsListRow
+                pilot={pilot}
+                key={pilot.name}
+                onPilotClicked={onPilotClicked}
+                selected={pilot.id === currentPilot}
+            />
         ));
-        
+
         return (
             <Table celled>
                 <PilotsListHeader />
