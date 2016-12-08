@@ -8,10 +8,12 @@ const initialState = schema.getDefaultState();
 
 export function loadData(state, payload) {
     const session = schema.from(state);
-    const {Pilot} = session;
+    const {Pilot, MechDesign, Mech} = session;
 
-    const {pilots} = payload;
+    const {pilots, designs, mechs} = payload;
     pilots.forEach(pilot => Pilot.parse(pilot));
+    designs.forEach(design => MechDesign.parse(design));
+    mechs.forEach(mech => Mech.parse(mech));
 
     return session.reduce();
 }

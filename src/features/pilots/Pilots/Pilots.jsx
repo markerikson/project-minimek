@@ -30,9 +30,29 @@ const mapState = (state) => {
     // The QuerySet that is returned from all() can be used to
     // retrieve instances of the Pilot class, or retrieve the
     // plain JS objects that are actually in the store.
-    // The toRefArray() method will give us an array of the
-    // plain JS objects for each item in the QuerySet.
-    const pilots = Pilot.all().toRefArray();
+
+    // The withModels modifier will let us map over Model instances
+    // for each entry, rather than the plain JS objects.
+    const pilots = Pilot.all().withModels.map(pilotModel => {
+        // Access the underlying plain JS object using the "ref" field,
+        // and make a shallow copy of it
+        const pilot = {
+            ...pilotModel.ref
+        };
+
+        // Look up the associated Mech instance using the foreign-key
+        // field that we defined in the Pilot Model class
+        const {mech} = pilotModel;
+
+        // If there actually is an associated mech, include the
+        // mech type's ID as a field in the data passed to the component
+        if(mech && mech.type) {
+            pilot.mechType = mech.type.id;
+        }
+
+        return pilot;
+    });
+
 
     // Now that we have an array of all pilot objects, return it as a prop
     return {pilots};
