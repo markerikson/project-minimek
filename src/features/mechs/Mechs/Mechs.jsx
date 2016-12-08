@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
 import {
     Grid,
@@ -6,25 +7,35 @@ import {
     Header,
 } from "semantic-ui-react";
 
+import schema from "app/schema";
+
 import MechsList from "../MechsList";
 import MechDetails from "../MechDetails";
 
-const mechs = [
-    {
-        id : 1,
-        name : "Warhammer",
-        type : "WHM-6R",
-        weight : 70,
-    }
-];
+
+const mapState = (state) => {
+    const session = schema.from(state.entities);
+    const {Mech} = session;
+
+    const mechs = Mech.all().withModels.map(mechModel => {
+        const mech = {
+            ...mechModel.ref,
+            mechType : {},
+        };
+
+        if(mechModel.type) {
+            mech.mechType = {...mechModel.type.ref};
+        }
+
+        return mech;
+    });
+
+    return {mechs}
+}
 
 class Mechs extends Component {
-    state = {
-        mechs : mechs,
-    }
-
     render() {
-        const {mechs} = this.state;
+        const {mechs = []} = this.props;
 
         const currentMech = mechs[0] || {};
 
@@ -46,4 +57,6 @@ class Mechs extends Component {
         );
     }
 }
-export default Mechs;
+
+
+export default connect(mapState)(Mechs);
