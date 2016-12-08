@@ -7,10 +7,15 @@ import {getWeightClass} from "../mechSelectors";
 const MechsListRow = ({mech={}}) => {
     const {
         id = "",
-        name = "",
         type = "",
-        weight = "",
+        mechType = {},
     } = mech;
+
+    const {
+        name = "",
+        weight = "",
+    } = mechType;
+
     const weightClass = getWeightClass(weight);
 
     return (
