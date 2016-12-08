@@ -1,7 +1,12 @@
-import {Model} from "redux-orm";
+import {Model, fk} from "redux-orm";
 
 
 export default class Pilot extends Model {
+    static get fields() {
+        return {
+            mech : fk("Mech"),
+        };
+    }
 
     static parse(pilotData) {
         // We could do useful stuff in here with relations,
