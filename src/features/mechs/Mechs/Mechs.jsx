@@ -1,107 +1,78 @@
-import React from "react";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 
 import {
     Grid,
-    Table,
     Segment,
     Header,
-    Form,
 } from "semantic-ui-react";
 
-const Mechs = () => {
+import schema from "app/schema";
+
+import MechsList from "../MechsList";
+import MechDetails from "../MechDetails";
+
+import {selectMech} from "../mechsActions";
+import {selectCurrentMech} from "../mechSelectors";
 
 
-    return (
-        <Segment>
-            <Grid>
-                <Grid.Column width={10}>
-                    <Header as="h3">Mechs List</Header>
-                    <Table celled>
+const mapState = (state) => {
+    const session = schema.from(state.entities);
+    const {Mech} = session;
 
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell width={1}>
-                                    ID
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={5}>
-                                    Name
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={3}>
-                                    Model
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={3}>
-                                    Weight (tons)
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={2}>
-                                    Class
-                                </Table.HeaderCell>
+    const mechs = Mech.all().withModels.map(mechModel => {
+        const mech = {
+            // Copy the data from the plain JS object
+            ...mechModel.ref,
+            // Provide a default empty object for the relation
+            mechType : {},
+        };
 
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            <Table.Row>
-                                <Table.Cell>
-                                    1
-                                </Table.Cell>
-                                <Table.Cell>
-                                    Warhammer
-                                </Table.Cell>
-                                <Table.Cell>
-                                    WHM-6R
-                                </Table.Cell>
-                                <Table.Cell>
-                                    70
-                                </Table.Cell>
-                                <Table.Cell>
-                                    Heavy
-                                </Table.Cell>
-                            </Table.Row>
-                        </Table.Body>
+        if(mechModel.type) {
+            // Replace the default object with a copy of the relation's data
+            mech.mechType = {...mechModel.type.ref};
+        }
 
-                    </Table>
-                </Grid.Column>
-                <Grid.Column width={6}>
-                    <Header as="h3">Mech Details</Header>
-                    <Segment >
-                        <Form size="large">
-                            <Form.Field name="id" width={6} >
-                                <label>ID</label>
-                                <input
-                                    placeholder="ID"
-                                    value="1"
-                                />
-                            </Form.Field>
-                            <Form.Field name="name" width={16} >
-                                <label>Name</label>
-                                <input
-                                    placeholder="Name"
-                                    value="Warhammer"
-                                />
-                            </Form.Field>
-                            <Form.Field name="model" width={6} >
-                                <label>Model</label>
-                                <input
-                                    placeholder="Model"
-                                    value="WHM-6R"
-                                />
-                            </Form.Field>
-                            <Form.Field name="weight" width={6} >
-                                <label>Weight</label>
-                                <input
-                                    value="70"
-                                />
-                            </Form.Field>
-                            <Form.Field name="class" width={6} >
-                                <label>Class</label>
-                                <input
-                                    value="Heavy"
-                                />
-                            </Form.Field>
-                        </Form>
-                    </Segment>
-                </Grid.Column>
-            </Grid>
-        </Segment>
-    )
+        return mech;
+    });
+    
+    const currentMech = selectCurrentMech(state);
+
+    return {mechs, currentMech}
 }
-export default Mechs;
+
+const actions = {
+    selectMech,
+};
+
+class Mechs extends Component {
+    render() {
+        const {mechs = [], selectMech, currentMech} = this.props;
+
+        const currentMechEntry = mechs.find(mech => mech.id === currentMech) || {};
+
+        return (
+            <Segment>
+                <Grid>
+                    <Grid.Column width={10}>
+                        <Header as="h3">Mechs List</Header>
+                        <MechsList
+                            mechs={mechs}
+                            onMechClicked={selectMech}
+                            currentMech={currentMech}
+                        />
+                    </Grid.Column>
+                    <Grid.Column width={6}>
+                        <Header as="h3">Mech Details</Header>
+                        <Segment >
+                            <MechDetails mech={currentMechEntry}/>
+                        </Segment>
+                    </Grid.Column>
+                </Grid>
+            </Segment>
+        );
+    }
+}
+
+
+export default connect(mapState, actions)(Mechs);
