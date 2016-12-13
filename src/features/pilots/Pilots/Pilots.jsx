@@ -1,134 +1,99 @@
-import React from "react";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 
 import {
     Grid,
-    Table,
     Segment,
     Header,
-    Form,
-    Dropdown,
 } from "semantic-ui-react";
 
+import schema from "app/schema";
 
-const RANKS = [
-    {value: "Private", text : "Private"},
-    {value: "Corporal", text : "Corporal"},
-    {value: "Sergeant", text : "Sergeant"},
-    {value: "Lieutenant", text : "Lieutenant"},
-    {value: "Captain", text : "Captain"},
-    {value: "Major", text : "Major"},
-    {value: "Colonel", text : "Colonel"},
-];
 
-const MECHS = [
-    {value : "WHM-6R", text : "Warhammer WHM-6R"}
-];
+import PilotsList from "../PilotsList";
+import PilotDetails from "../PilotDetails";
 
-const Pilots = () => {
+import {selectPilot} from "../pilotsActions";
+import {selectCurrentPilot} from "../pilotsSelectors";
 
-    return (
-        <Segment>
-            <Grid>
-                <Grid.Column width={10}>
-                    <Header as="h3">Pilot List</Header>
-                    <Table celled>
 
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell width={5}>
-                                    Name
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={3}>
-                                    Rank
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={2}>
-                                    Age
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={2}>
-                                    Skills
-                                </Table.HeaderCell>
-                                <Table.HeaderCell width={4}>
-                                    Mech
-                                </Table.HeaderCell>
+const mapState = (state) => {
+    // Create a Redux-ORM Session from our "entities" slice, which
+    // contains the "tables" for each model type
+    const session = schema.from(state.entities);
 
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            <Table.Row>
-                                <Table.Cell>
-                                    Natasha Kerensky
-                                </Table.Cell>
-                                <Table.Cell>
-                                    Captain
-                                </Table.Cell>
-                                <Table.Cell>
-                                    52
-                                </Table.Cell>
-                                <Table.Cell>
-                                    2/3
-                                </Table.Cell>
-                                <Table.Cell>
-                                    WHM-6R
-                                </Table.Cell>
-                            </Table.Row>
-                        </Table.Body>
+    // Retrieve the model class that we need.  Each Session
+    // specifically "binds" model classes to itself, so that
+    // updates to model instances are applied to that session.
+    // These "bound classes" are available as fields in the sesssion.
+    const {Pilot} = session;
 
-                    </Table>
-                </Grid.Column>
-                <Grid.Column width={6}>
-                    <Header as="h3">Pilot Details</Header>
-                    <Segment >
-                        <Form size="large">
-                            <Form.Field name="name" width={16} >
-                                <label>Name</label>
-                                <input
-                                    placeholder="Name"
-                                    value="Natasha Kerensky"
-                                />
-                            </Form.Field>
-                            <Form.Field name="rank" width={16}>
-                                <label>Rank</label>
-                                <Dropdown
-                                    fluid
-                                    selection
-                                    options={RANKS}
-                                    value="Colonel"
-                                />
-                            </Form.Field>
-                            <Form.Field name="age" width={6} >
-                                <label>Age</label>
-                                <input
-                                    placeholder="Age"
-                                    value="52"
-                                />
-                            </Form.Field>
-                            <Form.Field name="gunnery" width={6} >
-                                <label>Gunnery</label>
-                                <input
-                                    value="2"
-                                />
-                            </Form.Field>
-                            <Form.Field name="piloting" width={6} >
-                                <label>Piloting</label>
-                                <input
-                                    value="3"
-                                />
-                            </Form.Field>
-                            <Form.Field name="mech" width={16}>
-                                <label>Mech</label>
-                                <Dropdown
-                                    fluid
-                                    selection
-                                    options={MECHS}
-                                    value="WHM-6R"
-                                />
-                            </Form.Field>
-                        </Form>
-                    </Segment>
-                </Grid.Column>
-            </Grid>
-        </Segment>
-    )
+    // Query the session for all Pilot instances.
+    // The QuerySet that is returned from all() can be used to
+    // retrieve instances of the Pilot class, or retrieve the
+    // plain JS objects that are actually in the store.
+
+    // The withModels modifier will let us map over Model instances
+    // for each entry, rather than the plain JS objects.
+    const pilots = Pilot.all().withModels.map(pilotModel => {
+        // Access the underlying plain JS object using the "ref" field,
+        // and make a shallow copy of it
+        const pilot = {
+            ...pilotModel.ref
+        };
+
+        // Look up the associated Mech instance using the foreign-key
+        // field that we defined in the Pilot Model class
+        const {mech} = pilotModel;
+
+        // If there actually is an associated mech, include the
+        // mech type's ID as a field in the data passed to the component
+        if(mech && mech.type) {
+            pilot.mechType = mech.type.id;
+        }
+
+        return pilot;
+    });
+
+    const currentPilot = selectCurrentPilot(state);
+
+    // Now that we have an array of all pilot objects, return it as a prop
+    return {pilots, currentPilot};
 }
 
-export default Pilots;
+const actions = {
+    selectPilot,
+};
+
+export class Pilots extends Component {
+    
+
+    render() {
+        const {pilots = [], selectPilot, currentPilot} = this.props;
+
+        const currentPilotEntry = pilots.find(pilot => pilot.id === currentPilot) || {}
+
+        return (
+            <Segment>
+                <Grid>
+                    <Grid.Column width={10}>
+                        <Header as="h3">Pilot List</Header>
+                        <PilotsList
+                            pilots={pilots}
+                            onPilotClicked={selectPilot}
+                            currentPilot={currentPilot}
+                        />
+                    </Grid.Column>
+                    <Grid.Column width={6}>
+                        <Header as="h3">Pilot Details</Header>
+                        <Segment >
+                            <PilotDetails pilot={currentPilotEntry} />
+                        </Segment>
+                    </Grid.Column>
+                </Grid>
+            </Segment>
+        );
+    }
+}
+
+export default connect(mapState, actions)(Pilots);
