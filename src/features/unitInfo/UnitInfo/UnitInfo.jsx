@@ -8,6 +8,7 @@ import {
 
 import {selectUnitInfo} from "../unitInfoSelectors";
 import {updateUnitInfo} from "../unitInfoActions";
+import {getValueFromEvent} from "common/utils/clientUtils";
 
 const FACTIONS = [
     {value : "cc", text : "Capellan Confederation"},
@@ -38,9 +39,7 @@ class UnitInfo extends Component {
     }
 
     onNameChanged = (e) => {
-        const {name, value} = e.target;
-
-        const newValues = { [name] : value};
+        const newValues = getValueFromEvent(e);
         this.props.updateUnitInfo(newValues);
     }
 
