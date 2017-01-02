@@ -1,5 +1,11 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Form, Dropdown} from "semantic-ui-react";
+
+import schema from "app/schema";
+
+import {selectCurrentPilot} from "../pilotsSelectors";
+
 
 const RANKS = [
     {value: "Private", text : "Private"},
@@ -14,6 +20,21 @@ const RANKS = [
 const MECHS = [
     {value : "WHM-6R", text : "Warhammer WHM-6R"}
 ];
+
+const mapState = (state) => {
+    let pilot;
+    
+    const currentPilot = selectCurrentPilot(state);
+    
+    const session = schema.from(state.entities);
+    const {Pilot} = session;
+    
+    if(Pilot.hasId(currentPilot)) {
+        pilot = Pilot.withId(currentPilot).ref;
+    }
+    
+    return {pilot}
+}
 
 const PilotDetails = ({pilot={}}) =>{
     const {
@@ -32,6 +53,7 @@ const PilotDetails = ({pilot={}}) =>{
                 <input
                     placeholder="Name"
                     value={name}
+                    disabled={true}
                 />
             </Form.Field>
             <Form.Field name="rank" width={16}>
@@ -41,6 +63,7 @@ const PilotDetails = ({pilot={}}) =>{
                     selection
                     options={RANKS}
                     value={rank}
+                    disabled={true}
                 />
             </Form.Field>
             <Form.Field name="age" width={6}>
@@ -48,18 +71,21 @@ const PilotDetails = ({pilot={}}) =>{
                 <input
                     placeholder="Age"
                     value={age}
+                    disabled={true}
                 />
             </Form.Field>
             <Form.Field name="gunnery" width={6}>
                 <label>Gunnery</label>
                 <input
                     value={gunnery}
+                    disabled={true}
                 />
             </Form.Field>
             <Form.Field name="piloting" width={6}>
                 <label>Piloting</label>
                 <input
                     value={piloting}
+                    disabled={true}
                 />
             </Form.Field>
             <Form.Field name="mech" width={16}>
@@ -69,10 +95,11 @@ const PilotDetails = ({pilot={}}) =>{
                     selection
                     options={MECHS}
                     value={mechType}
+                    disabled={true}
                 />
             </Form.Field>
         </Form>
     );
 }
 
-export default PilotDetails;
+export default connect(mapState)(PilotDetails);
