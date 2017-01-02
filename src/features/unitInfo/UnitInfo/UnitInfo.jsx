@@ -10,6 +10,8 @@ import {selectUnitInfo} from "../unitInfoSelectors";
 import {updateUnitInfo} from "../unitInfoActions";
 import {getValueFromEvent} from "common/utils/clientUtils";
 
+import FormEditWrapper from "common/components/FormEditWrapper";
+
 const FACTIONS = [
     {value : "cc", text : "Capellan Confederation"},
     {value : "dc", text : "Draconis Combine"},
@@ -45,7 +47,7 @@ class UnitInfo extends Component {
 
 
     render() {
-        const {unitInfo} = this.props;
+        const {unitInfo, updateUnitInfo} = this.props;
         const {name, affiliation} = unitInfo;
 
         return (
@@ -53,12 +55,17 @@ class UnitInfo extends Component {
                 <Form size="large">
                     <Form.Field name="name" width={6}>
                         <label>Unit Name</label>
-                        <input
-                            placeholder="Name"
-                            name="name"
-                            value={name}
-                            onChange={this.onNameChanged}
-                        />
+                        <FormEditWrapper
+                            singleValue={true}
+                            value={ {name} }
+                            onChange={updateUnitInfo}
+                            passIsEditing={false}
+                        >
+                            <input
+                                placeholder="Name"
+                                name="name"
+                            />
+                        </FormEditWrapper>
                     </Form.Field>
                     <Form.Field name="affiliation" width={6}>
                         <label>Affiliation</label>
