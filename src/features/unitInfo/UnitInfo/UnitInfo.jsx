@@ -37,6 +37,13 @@ class UnitInfo extends Component {
         this.props.updateUnitInfo(newValues);
     }
 
+    onNameChanged = (e) => {
+        const {name, value} = e.target;
+
+        const newValues = { [name] : value};
+        this.props.updateUnitInfo(newValues);
+    }
+
 
     render() {
         const {unitInfo} = this.props;
@@ -47,7 +54,12 @@ class UnitInfo extends Component {
                 <Form size="large">
                     <Form.Field name="name" width={6}>
                         <label>Unit Name</label>
-                        <input placeholder="Name" name="name" value={name}/>
+                        <input
+                            placeholder="Name"
+                            name="name"
+                            value={name}
+                            onChange={this.onNameChanged}
+                        />
                     </Form.Field>
                     <Form.Field name="affiliation" width={6}>
                         <label>Affiliation</label>
