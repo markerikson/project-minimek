@@ -4,6 +4,8 @@ import {Form, Dropdown, Grid, Button} from "semantic-ui-react";
 
 import schema from "app/schema";
 
+import FormEditWrapper from "common/components/FormEditWrapper";
+
 import {selectCurrentPilot, selectIsEditingPilot} from "../pilotsSelectors";
 
 import {
@@ -103,16 +105,21 @@ export class PilotDetails  extends Component {
 
         return (
             <Form size="large">
-                <Form.Field
-                    name="name"
-                    label="Name"
-                    width={16}
-                    placeholder="Name"
-                    value={name}
-                    disabled={!canStopEditing}
+                <FormEditWrapper
+                    singleValue={true}
+                    value={ {name} }
                     onChange={this.onInputChanged}
-                    control="input"
-                />
+                    passIsEditing={false}
+                >
+                    <Form.Field
+                        name="name"
+                        label="Name"
+                        width={16}
+                        placeholder="Name"
+                        disabled={!canStopEditing}
+                        control="input"
+                    />
+                </FormEditWrapper>
                 <Form.Field
                     name="rank"
                     label="Rank"
@@ -125,16 +132,21 @@ export class PilotDetails  extends Component {
                     onChange={this.onDropdownChanged}
                     disabled={!canStopEditing}
                 />
-                <Form.Field
-                    name="age"
-                    width={6}
-                    label="Age"
-                    placeholder="Age"
-                    control="input"
-                    value={age}
+                <FormEditWrapper
+                    singleValue={true}
+                    value={ {age} }
                     onChange={this.onInputChanged}
-                    disabled={!canStopEditing}
-                />
+                    passIsEditing={false}
+                >
+                    <Form.Field
+                        name="age"
+                        width={6}
+                        label="Age"
+                        placeholder="Age"
+                        control="input"
+                        disabled={!canStopEditing}
+                    />
+                </FormEditWrapper>
                 <Form.Field
                     name="gunnery"
                     label="Gunnery"
