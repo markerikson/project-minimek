@@ -70,15 +70,16 @@ const actions = {
 
 
 export class PilotDetails  extends Component {
-    onNameChanged = (e) => {
+    onInputChanged = (e) => {
         const newValues = getValueFromEvent(e);
         const {id} = this.props.pilot;
 
         this.props.updateEntity("Pilot", id, newValues);
     }
 
-    onRankChanged = (e, result) => {
-        const newValues = {rank : result.value};
+    onDropdownChanged = (e, result) => {
+        const {name, value} = result;
+        const newValues = { [name] : value};
         const {id} = this.props.pilot;
 
         this.props.updateEntity("Pilot", id, newValues);
@@ -121,7 +122,7 @@ export class PilotDetails  extends Component {
                     selection
                     options={RANKS}
                     value={rank}
-                    onChange={this.onRankChanged}
+                    onChange={this.onDropdownChanged}
                     disabled={!canStopEditing}
                 />
                 <Form.Field
@@ -131,6 +132,7 @@ export class PilotDetails  extends Component {
                     placeholder="Age"
                     control="input"
                     value={age}
+                    onChange={this.onInputChanged}
                     disabled={!canStopEditing}
                 />
                 <Form.Field
@@ -142,6 +144,7 @@ export class PilotDetails  extends Component {
                     selection
                     options={SKILL_VALUES}
                     value={gunnery}
+                    onChange={this.onDropdownChanged}
                     disabled={!canStopEditing}
                 />
                 <Form.Field
@@ -153,6 +156,7 @@ export class PilotDetails  extends Component {
                     selection
                     options={SKILL_VALUES}
                     value={piloting}
+                    onChange={this.onDropdownChanged}
                     disabled={!canStopEditing}
                 />
                 <Form.Field
