@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Form, Dropdown, Grid, Button} from "semantic-ui-react";
 
@@ -51,91 +51,98 @@ const actions = {
     stopEditingPilot,
 }
 
-const PilotDetails = ({pilot={}, pilotIsSelected = false, isEditingPilot = false, ...actions }) =>{
-    const {
-        name = "",
-        rank = "",
-        age = "",
-        gunnery = "",
-        piloting = "",
-        mechType = "",
-    } = pilot;
 
-    const canStartEditing = pilotIsSelected && !isEditingPilot;
-    const canStopEditing = pilotIsSelected && isEditingPilot;
+export class PilotDetails  extends Component {
 
-    return (
-        <Form size="large">
-            <Form.Field name="name" width={16}>
-                <label>Name</label>
-                <input
-                    placeholder="Name"
-                    value={name}
-                    disabled={!canStopEditing}
-                />
-            </Form.Field>
-            <Form.Field name="rank" width={16}>
-                <label>Rank</label>
-                <Dropdown
-                    fluid
-                    selection
-                    options={RANKS}
-                    value={rank}
-                    disabled={!canStopEditing}
-                />
-            </Form.Field>
-            <Form.Field name="age" width={6}>
-                <label>Age</label>
-                <input
-                    placeholder="Age"
-                    value={age}
-                    disabled={!canStopEditing}
-                />
-            </Form.Field>
-            <Form.Field name="gunnery" width={6}>
-                <label>Gunnery</label>
-                <input
-                    value={gunnery}
-                    disabled={!canStopEditing}
-                />
-            </Form.Field>
-            <Form.Field name="piloting" width={6}>
-                <label>Piloting</label>
-                <input
-                    value={piloting}
-                    disabled={!canStopEditing}
-                />
-            </Form.Field>
-            <Form.Field name="mech" width={16}>
-                <label>Mech</label>
-                <Dropdown
-                    fluid
-                    selection
-                    options={MECHS}
-                    value={mechType}
-                    disabled={true}
-                />
-            </Form.Field>
-            <Grid.Row width={16}>
-                <Button
-                    primary
-                    disabled={!canStartEditing}
-                    type="button"
-                    onClick={actions.startEditingPilot}
-                >
-                    Start Editing
-                </Button>
-                <Button
-                    secondary
-                    disabled={!canStopEditing}
-                    type="button"
-                    onClick={actions.stopEditingPilot}
-                >
-                    Stop Editing
-                </Button>
-            </Grid.Row>
-        </Form>
-    );
+    render() {
+        const {pilot={}, pilotIsSelected = false, isEditingPilot = false, ...actions } = this.props;
+
+        const {
+            name = "",
+            rank = "",
+            age = "",
+            gunnery = "",
+            piloting = "",
+            mechType = "",
+        } = pilot;
+
+        const canStartEditing = pilotIsSelected && !isEditingPilot;
+        const canStopEditing = pilotIsSelected && isEditingPilot;
+
+        return (
+            <Form size="large">
+                <Form.Field name="name" width={16}>
+                    <label>Name</label>
+                    <input
+                        placeholder="Name"
+                        value={name}
+                        disabled={!canStopEditing}
+                    />
+                </Form.Field>
+                <Form.Field name="rank" width={16}>
+                    <label>Rank</label>
+                    <Dropdown
+                        fluid
+                        selection
+                        options={RANKS}
+                        value={rank}
+                        disabled={!canStopEditing}
+                    />
+                </Form.Field>
+                <Form.Field name="age" width={6}>
+                    <label>Age</label>
+                    <input
+                        placeholder="Age"
+                        value={age}
+                        disabled={!canStopEditing}
+                    />
+                </Form.Field>
+                <Form.Field name="gunnery" width={6}>
+                    <label>Gunnery</label>
+                    <input
+                        value={gunnery}
+                        disabled={!canStopEditing}
+                    />
+                </Form.Field>
+                <Form.Field name="piloting" width={6}>
+                    <label>Piloting</label>
+                    <input
+                        value={piloting}
+                        disabled={!canStopEditing}
+                    />
+                </Form.Field>
+                <Form.Field name="mech" width={16}>
+                    <label>Mech</label>
+                    <Dropdown
+                        fluid
+                        selection
+                        options={MECHS}
+                        value={mechType}
+                        disabled={true}
+                    />
+                </Form.Field>
+                <Grid.Row width={16}>
+                    <Button
+                        primary
+                        disabled={!canStartEditing}
+                        type="button"
+                        onClick={actions.startEditingPilot}
+                    >
+                        Start Editing
+                    </Button>
+                    <Button
+                        secondary
+                        disabled={!canStopEditing}
+                        type="button"
+                        onClick={actions.stopEditingPilot}
+                    >
+                        Stop Editing
+                    </Button>
+                </Grid.Row>
+            </Form>
+        );
+    }
 }
+
 
 export default connect(mapState, actions)(PilotDetails);
