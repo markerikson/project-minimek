@@ -11,6 +11,10 @@ import {
     stopEditingPilot,
 } from "../pilotsActions";
 
+import {updateEntity} from "features/entities/entityActions";
+
+import {getValueFromEvent} from "common/utils/clientUtils";
+
 
 const RANKS = [
     {value: "Private", text : "Private"},
@@ -61,10 +65,18 @@ const mapState = (state) => {
 const actions = {
     startEditingPilot,
     stopEditingPilot,
+    updateEntity,
 }
 
 
 export class PilotDetails  extends Component {
+    onNameChanged = (e) => {
+        const newValues = getValueFromEvent(e);
+        const {id} = this.props.pilot;
+
+        this.props.updateEntity("Pilot", id, newValues);
+    }
+
 
     render() {
         const {pilot={}, pilotIsSelected = false, isEditingPilot = false, ...actions } = this.props;
@@ -87,31 +99,32 @@ export class PilotDetails  extends Component {
                     name="name"
                     label="Name"
                     width={16}
-                        placeholder="Name"
-                        value={name}
-                        disabled={!canStopEditing}
+                    placeholder="Name"
+                    value={name}
+                    disabled={!canStopEditing}
+                    onChange={this.onNameChanged}
                     control="input"
-                    />
+                />
                 <Form.Field
                     name="rank"
                     label="Rank"
                     width={16}
                     control={Dropdown}
-                        fluid
-                        selection
-                        options={RANKS}
-                        value={rank}
-                        disabled={!canStopEditing}
-                    />
+                    fluid
+                    selection
+                    options={RANKS}
+                    value={rank}
+                    disabled={!canStopEditing}
+                />
                 <Form.Field
                     name="age"
                     width={6}
                     label="Age"
-                        placeholder="Age"
+                    placeholder="Age"
                     control="input"
-                        value={age}
-                        disabled={!canStopEditing}
-                    />
+                    value={age}
+                    disabled={!canStopEditing}
+                />
                 <Form.Field
                     name="gunnery"
                     label="Gunnery"
@@ -120,9 +133,9 @@ export class PilotDetails  extends Component {
                     fluid
                     selection
                     options={SKILL_VALUES}
-                        value={gunnery}
-                        disabled={!canStopEditing}
-                    />
+                    value={gunnery}
+                    disabled={!canStopEditing}
+                />
                 <Form.Field
                     name="piloting"
                     label="Piloting"
@@ -131,20 +144,20 @@ export class PilotDetails  extends Component {
                     fluid
                     selection
                     options={SKILL_VALUES}
-                        value={piloting}
-                        disabled={!canStopEditing}
-                    />
+                    value={piloting}
+                    disabled={!canStopEditing}
+                />
                 <Form.Field
                     name="mech"
                     label="Mech"
                     width={16}
                     control={Dropdown}
-                        fluid
-                        selection
-                        options={MECHS}
-                        value={mechType}
-                        disabled={true}
-                    />
+                    fluid
+                    selection
+                    options={MECHS}
+                    value={mechType}
+                    disabled={true}
+                />
                 <Grid.Row width={16}>
                     <Button
                         primary
