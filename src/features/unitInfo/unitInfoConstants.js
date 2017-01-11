@@ -1,0 +1,1 @@
+export const UNIT_INFO_UPDATE = "UNIT_INFO_UPDATE";
