@@ -16,9 +16,10 @@ const PilotsListHeader = () => (
             <Table.HeaderCell width={2}>
                 Skills
             </Table.HeaderCell>
-            <Table.HeaderCell width={4}>
+            <Table.HeaderCell width={3}>
                 Mech
             </Table.HeaderCell>
+            <Table.HeaderCell width={1} />
 
         </Table.Row>
     </Table.Header>
