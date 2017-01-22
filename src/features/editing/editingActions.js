@@ -3,6 +3,7 @@ import {
     EDIT_ITEM_UPDATE,
     EDIT_ITEM_APPLY,
     EDIT_ITEM_STOP,
+    EDIT_ITEM_RESET,
 } from "./editingConstants";
 
 
@@ -43,6 +44,16 @@ export function stopEditingItem(itemType, itemID) {
         payload : {
             itemType,
             itemID
+        },
+    };
+}
+
+export function resetEditedItem(itemType, itemID) {
+    return {
+        type : EDIT_ITEM_RESET,
+        payload : {
+            itemType,
+            itemID,
         },
     };
 }
