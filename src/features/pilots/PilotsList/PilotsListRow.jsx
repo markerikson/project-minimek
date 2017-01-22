@@ -59,10 +59,17 @@ const PilotsListRow = ({pilot={}, onPilotClicked=_.noop, selected, deleteEntity}
         mechType = "",
     } = pilot;
 
-    const onDeleteClicked = () => deleteEntity("Pilot", id);
+    const onDeleteClicked = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        deleteEntity("Pilot", id);
+    }
+
+    const onRowClicked = () => onPilotClicked(id);
+
 
     return (
-        <Table.Row onClick={() => onPilotClicked(id)} active={selected}>
+        <Table.Row onClick={onRowClicked} active={selected}>
             <Table.Cell>
                 {name}
             </Table.Cell>
