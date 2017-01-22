@@ -12,6 +12,10 @@ export default class Mech extends Model {
     static parse(mechData) {
         return this.create(mechData);
     }
+
+    toJSON() {
+        return {...this.ref};
+    }
 }
 
 Mech.modelName = "Mech";
