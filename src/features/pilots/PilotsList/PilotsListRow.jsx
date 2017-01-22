@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import {Table} from "semantic-ui-react";
 import _ from "lodash";
 
-import schema from "app/schema";
+import {getEntitiesSession} from "features/entities/entitySelectors";
 
 const mapState = (state, ownProps) => {
-    const session = schema.from(state.entities);
+    const session = getEntitiesSession(state);
     const {Pilot} = session;
 
     let pilot;

@@ -5,10 +5,10 @@ import {Table} from "semantic-ui-react";
 import {getWeightClass} from "../mechSelectors";
 
 
-import schema from "app/schema";
+import {getEntitiesSession} from "features/entities/entitySelectors";
 
 const mapState = (state, ownProps) => {
-    const session = schema.from(state.entities);
+    const session = getEntitiesSession(state);
     const {Mech} = session;
 
     let mech;
