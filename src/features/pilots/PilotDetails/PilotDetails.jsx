@@ -14,7 +14,7 @@ import {
     stopEditingPilot,
 } from "../pilotsActions";
 
-import {updateEntity} from "features/entities/entityActions";
+import {editItemAttributes} from "features/editing/editingActions";
 
 import {getValueFromEvent} from "common/utils/clientUtils";
 
@@ -76,7 +76,7 @@ const mapState = (state) => {
 const actions = {
     startEditingPilot,
     stopEditingPilot,
-    updateEntity,
+    editItemAttributes,
 }
 
 
@@ -85,7 +85,7 @@ export class PilotDetails  extends Component {
         const newValues = getValueFromEvent(e);
         const {id} = this.props.pilot;
 
-        this.props.updateEntity("Pilot", id, newValues);
+        this.props.editItemAttributes("Pilot", id, newValues);
     }
 
     onDropdownChanged = (e, result) => {
@@ -93,7 +93,17 @@ export class PilotDetails  extends Component {
         const newValues = { [name] : value};
         const {id} = this.props.pilot;
 
-        this.props.updateEntity("Pilot", id, newValues);
+        this.props.editItemAttributes("Pilot", id, newValues);
+    }
+
+    onStartEditingClicked = () => {
+        const {id} = this.props.pilot;
+        this.props.startEditingPilot(id);
+    }
+
+    onStopEditingClicked = () => {
+        const {id} = this.props.pilot;
+        this.props.stopEditingPilot(id);
     }
 
 
@@ -196,7 +206,7 @@ export class PilotDetails  extends Component {
                         primary
                         disabled={!canStartEditing}
                         type="button"
-                        onClick={actions.startEditingPilot}
+                        onClick={this.onStartEditingClicked}
                     >
                         Start Editing
                     </Button>
@@ -204,7 +214,7 @@ export class PilotDetails  extends Component {
                         secondary
                         disabled={!canStopEditing}
                         type="button"
-                        onClick={actions.stopEditingPilot}
+                        onClick={this.onStopEditingClicked}
                     >
                         Stop Editing
                     </Button>
