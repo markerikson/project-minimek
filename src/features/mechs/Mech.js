@@ -16,6 +16,10 @@ export default class Mech extends Model {
     toJSON() {
         return {...this.ref};
     }
+
+    updateFrom(otherMech) {
+        this.update(otherMech.ref);
+    }
 }
 
 Mech.modelName = "Mech";
