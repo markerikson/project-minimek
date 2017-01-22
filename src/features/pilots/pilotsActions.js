@@ -45,3 +45,12 @@ export function stopEditingPilot() {
         dispatch(stopEditingItem("Pilot", currentPilot));
     }
 }
+
+export function cancelEditingPilot() {
+    return (dispatch, getState) => {
+        const currentPilot = selectCurrentPilot(getState());
+
+        dispatch({type : PILOT_EDIT_STOP});
+        dispatch(stopEditingItem("Pilot", currentPilot));
+    }
+}
