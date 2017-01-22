@@ -5,6 +5,7 @@ export default class Pilot extends Model {
     static get fields() {
         return {
             mech : fk("Mech"),
+            // some test comments
         };
     }
 

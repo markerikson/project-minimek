@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Form, Dropdown, Grid, Button} from "semantic-ui-react";
 
-import schema from "app/schema";
+import {getEntitiesSession} from "features/entities/entitySelectors";
 
 import FormEditWrapper from "common/components/FormEditWrapper";
 
@@ -49,7 +49,7 @@ const mapState = (state) => {
     
     const currentPilot = selectCurrentPilot(state);
     
-    const session = schema.from(state.entities);
+    const session = getEntitiesSession(state);
     const {Pilot} = session;
     
     if(Pilot.hasId(currentPilot)) {
