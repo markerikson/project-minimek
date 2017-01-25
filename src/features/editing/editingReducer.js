@@ -26,6 +26,9 @@ export function copyEntity(sourceEntities, destinationEntities, payload) {
     const {itemID, itemType} = payload;
 
     const newItemAttributes = readEntityData(sourceEntities, itemType, itemID);
+    if(newItemAttributes.name) {
+        newItemAttributes.name += " (copied)";
+    }
     const creationPayload = {itemType, itemID, newItemAttributes}
 
     const updatedEntities = createEntity(destinationEntities, creationPayload);
