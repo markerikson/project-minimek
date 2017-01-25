@@ -26,8 +26,6 @@ export function selectPilot(state, payload) {
         // Deselect entirely if it's a second click on the same pilot,
         // otherwise go ahead and select the one that was clicked
         currentPilot : isSamePilot ? null : newSelectedPilot,
-        // Any time we select a different pilot, we stop editing
-        isEditing : false,
     };
 }
 
