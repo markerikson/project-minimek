@@ -5,6 +5,7 @@ export default class Pilot extends Model {
     static get fields() {
         return {
             mech : fk("Mech"),
+            // some test comments
         };
     }
 
@@ -16,6 +17,14 @@ export default class Pilot extends Model {
         // Note that in a static class method, `this` is the
         // class itself, not an instance
         return this.create(pilotData);
+    }
+
+    toJSON() {
+        return {...this.ref};
+    }
+
+    updateFrom(otherPilot) {
+        this.update(otherPilot.ref);
     }
 }
 
