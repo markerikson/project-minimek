@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Form} from "semantic-ui-react";
 
-import schema from "app/schema";
+import {getEntitiesSession} from "features/entities/entitySelectors";
 
 import {getWeightClass, selectCurrentMech} from "../mechSelectors";
 
@@ -12,7 +12,7 @@ const mapState = (state) => {
 
     const currentMech = selectCurrentMech(state);
 
-    const session = schema.from(state.entities);
+    const session = getEntitiesSession(state);
     const {Mech} = session;
 
     if(Mech.hasId(currentMech)) {

@@ -6,6 +6,10 @@ import {
     PILOT_EDIT_STOP,
 } from "./pilotsConstants";
 
+import {
+    ENTITY_DELETE,
+} from "features/entities/entityConstants";
+
 const initialState = {
     currentPilot : null,
     isEditing : false,
@@ -22,8 +26,6 @@ export function selectPilot(state, payload) {
         // Deselect entirely if it's a second click on the same pilot,
         // otherwise go ahead and select the one that was clicked
         currentPilot : isSamePilot ? null : newSelectedPilot,
-        // Any time we select a different pilot, we stop editing
-        isEditing : false,
     };
 }
 
@@ -41,9 +43,21 @@ export function stopEditingPilot(state, payload) {
     };
 }
 
+export function stopEditingIfDeleted(state, payload) {
+    const {itemType, itemID} = payload;
+    const {isEditing, currentPilot} = state;
+
+    if(isEditing && itemType === "Pilot" && itemID === currentPilot) {
+        return stopEditingPilot(state, payload);
+    }
+
+    return state;
+}
+
 
 export default createReducer(initialState, {
     [PILOT_SELECT] : selectPilot,
     [PILOT_EDIT_START] : startEditingPilot,
     [PILOT_EDIT_STOP] : stopEditingPilot,
+    [ENTITY_DELETE] : stopEditingIfDeleted,
 });
