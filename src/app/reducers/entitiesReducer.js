@@ -2,13 +2,13 @@ import {createReducer} from "common/utils/reducerUtils";
 
 import {DATA_LOADED} from "features/tools/toolConstants";
 
-import schema from "app/schema"
+import orm from "app/schema"
 
-const initialState = schema.getDefaultState();
+const initialState = orm.getEmptyState();
 
 export function loadData(state, payload) {
     // Create a Redux-ORM session from our entities "tables"
-    const session = schema.from(state);
+    const session = orm.session(state);
     // Get a reference to the correct version of model classes for this Session
     const {Pilot, MechDesign, Mech} = session;
 
@@ -17,17 +17,17 @@ export function loadData(state, payload) {
     // Clear out any existing models from state so that we can avoid
     // conflicts from the new data coming in if data is reloaded
     [Pilot, Mech, MechDesign].forEach(modelType => {
-        modelType.all().withModels.forEach(model => model.delete());
-        session.state = session.reduce();
+        modelType.all().toModelArray().forEach(model => model.delete());
     });
 
-    // Queue up creation commands for each entry
+    // Immutably update the session state as we insert items
     pilots.forEach(pilot => Pilot.parse(pilot));
+
     designs.forEach(design => MechDesign.parse(design));
     mechs.forEach(mech => Mech.parse(mech));
 
-    // Apply the queued updates and return the updated "tables"
-    return session.reduce();
+    // Return the new "tables" object containing the updates
+    return session.state;
 }
 
 
