@@ -6,58 +6,50 @@ import {
 
 import {createConditionalSliceReducer} from "common/utils/reducerUtils";
 
-import schema from "app/schema";
+import orm from "app/schema";
 
 export function updateEntity(state, payload) {
     const {itemType, itemID, newItemAttributes} = payload;
 
-    const session = schema.from(state);
+    const session = orm.session(state);
     const ModelClass = session[itemType];
-
-    let newState = state;
 
     if(ModelClass.hasId(itemID)) {
         const modelInstance = ModelClass.withId(itemID);
 
         modelInstance.update(newItemAttributes);
-
-        newState = session.reduce();
     }
 
-    return newState;
+    return session.state;
 }
 
 
 export function deleteEntity(state, payload) {
     const {itemID, itemType} = payload;
 
-    const session = schema.from(state);
+    const session = orm.session(state);
     const ModelClass = session[itemType];
-
-    let newState = state;
 
     if(ModelClass.hasId(itemID)) {
         const modelInstance = ModelClass.withId(itemID);
 
+        // The session will immutably update its state reference
         modelInstance.delete();
-
-        // Immutably apply updates and return the new entities structure
-        newState = session.reduce();
     }
 
-    return newState;
+    // This will either be the original state object or the updated one
+    return session.state;
 }
 
 export function createEntity(state, payload) {
     const {itemType, newItemAttributes} = payload;
 
-    const session = schema.from(state);
+    const session = orm.session(state);
     const ModelClass = session[itemType];
 
     ModelClass.parse(newItemAttributes);
 
-    const newState = session.reduce();
-    return newState;
+    return session.state;
 }
 
 

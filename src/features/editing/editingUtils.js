@@ -1,4 +1,4 @@
-import schema from "app/schema";
+import orm from "app/schema";
 import {getModelByType} from "common/utils/modelUtils";
 
 export function updateEditingEntitiesState(state, updatedEditingEntities) {
@@ -16,7 +16,7 @@ export function updateEntitiesState(state, updatedEntities) {
 }
 
 export function readEntityData(entities, itemType, itemID) {
-    const readSession = schema.from(entities);
+    const readSession = orm.session(entities);
 
     // Look up the model instance for the requested item
     const model = getModelByType(readSession, itemType, itemID);

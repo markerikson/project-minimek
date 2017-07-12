@@ -15,7 +15,7 @@ const mapState = (state) => {
     const session = getEntitiesSession(state);
     const {Mech} = session;
 
-    const mechs = Mech.all().withModels.map(mechModel => mechModel.getId());
+    const mechs = Mech.all().toModelArray().map(mechModel => mechModel.getId());
 
     const currentMech = selectCurrentMech(state);
 
