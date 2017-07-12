@@ -31,7 +31,7 @@ const mapState = (state) => {
     // for each entry, rather than the plain JS objects.
 
     // Extract a list of IDs for each Pilot entry
-    const pilots = Pilot.all().withModels.map(pilotModel => pilotModel.getId());
+    const pilots = Pilot.all().toModelArray().map(pilotModel => pilotModel.getId());
 
     const currentPilot = selectCurrentPilot(state);
 
