@@ -7,24 +7,24 @@ const modalComponentLookupTable = {
     TestModal
 };
 
-const mapState = (state) => ({currentModal : state.modals});
+const mapState = (state) => ({currentModals : state.modals});
 
 
 export class ModalManager extends Component {
     render() {
-        const {currentModal} = this.props;
+        const {currentModals} = this.props;
 
 
-        let renderedModal;
-
-        if(currentModal) {
-            const {modalType, modalProps = {}} = currentModal;
+        const renderedModals = currentModals.map( (modalDescription, index) => {
+            const {modalType, modalProps = {}} = modalDescription;
             const ModalComponent = modalComponentLookupTable[modalType];
 
-            renderedModal = <ModalComponent {...modalProps} />;
-        }
+            return <ModalComponent {...modalProps}  key={modalType + index}/>;
 
-        return <span>{renderedModal}</span>
+        });
+
+
+        return <span>{renderedModals}</span>
     }
 }
 

@@ -6,15 +6,20 @@ import {
 import {createReducer} from "common/utils/reducerUtils";
 
 
-const initialState = null;
+const initialState = [];
+
 
 export function openModal(state, payload) {
     const {modalType, modalProps} = payload;
-    return {modalType, modalProps};
+    // Always pushing a new modal onto the stack
+    return state.concat({modalType, modalProps});
 }
 
 export function closeModal(state, payload) {
-    return null;
+    // Always popping the last modal off the stack
+    const newState = state.slice();
+    newState.pop();
+    return newState;
 }
 
 
