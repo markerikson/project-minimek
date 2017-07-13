@@ -6,16 +6,23 @@ import {
 } from "semantic-ui-react";
 
 import {loadUnitData} from "../toolActions";
+import {openModal} from "features/modals/modalsActions";
 
-const actions = {loadUnitData};
+const actions = {loadUnitData, openModal};
 
 class Tools extends Component {
+
+    onOpenModalClicked = () => {
+        this.props.openModal("TestModal", {a : 42});
+    }
+
     render() {
-        const {loadUnitData} = this.props;
+        const {loadUnitData, openModal} = this.props;
         
         return (
             <Segment attached="bottom">
                 <Button onClick={loadUnitData}>Reload Unit Data</Button>
+                <Button primary onClick={this.onOpenModalClicked}>Show Test Modal</Button>
             </Segment>
         )
     }
