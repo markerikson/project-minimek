@@ -6,14 +6,16 @@ import {
 } from "semantic-ui-react";
 
 import {loadUnitData} from "../toolActions";
-import {openModal} from "features/modals/modalsActions";
+import {showContextMenu} from "features/contextMenus/contextMenuActions";
 
-const actions = {loadUnitData, openModal};
+
+
+const actions = {loadUnitData, showContextMenu};
 
 class Tools extends Component {
 
-    onOpenModalClicked = () => {
-        this.props.openModal("ColorPickerDialog");
+    onShowContextMenuClicked = () => {
+        this.props.showContextMenu(400, 600, "TestContextMenu", {text : "Blah"});
     }
 
     render() {
@@ -22,7 +24,8 @@ class Tools extends Component {
         return (
             <Segment attached="bottom">
                 <Button onClick={loadUnitData}>Reload Unit Data</Button>
-                <Button primary onClick={this.onOpenModalClicked}>Show Test Modal</Button>
+                <Button primary onClick={this.onShowContextMenuClicked}>Show Test Context Menu</Button>
+
             </Segment>
         )
     }
