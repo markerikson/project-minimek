@@ -8,9 +8,9 @@ import {
 import {SketchPicker} from "react-color";
 
 import {closeModal} from "features/modals/modalsActions";
-import {noop} from "common/utils/clientUtils";
+import {colorSelected} from "./colorPickerActions";
 
-const actions = {closeModal};
+const actions = {closeModal, colorSelected};
 
 export class ColorPickerDialog extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export class ColorPickerDialog extends Component {
     }
 
     onSelectClicked = () => {
-        this.props.colorSelected(this.state.color);
+        this.props.colorSelected(this.state.color, this.props.onColorPicked);
 
         this.props.closeModal();
     }
@@ -57,8 +57,7 @@ export class ColorPickerDialog extends Component {
 }
 
 ColorPickerDialog.defaultProps = {
-    color : "red",
-    colorSelected : noop
+    color : "red"
 };
 
 
