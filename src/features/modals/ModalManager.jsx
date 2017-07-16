@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 import TestModal from "./TestModal";
-import ColorPickerDialog from "common/components/ColorPickerDialog";
+import ColorPickerDialog from "common/components/ColorPicker/ColorPickerDialog";
 
 const modalComponentLookupTable = {
     ColorPickerDialog,

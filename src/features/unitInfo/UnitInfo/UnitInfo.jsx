@@ -11,7 +11,7 @@ import {updateUnitInfo} from "../unitInfoActions";
 import {getValueFromEvent} from "common/utils/clientUtils";
 
 import FormEditWrapper from "common/components/FormEditWrapper";
-import ColorPickerButton from "common/components/ColorPickerButton";
+import ColorPickerButton from "common/components/ColorPicker/ColorPickerButton";
 
 const FACTIONS = [
     {value : "cc", text : "Capellan Confederation"},
