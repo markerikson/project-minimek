@@ -49,7 +49,7 @@ class UnitInfo extends Component {
 
     render() {
         const {unitInfo, updateUnitInfo} = this.props;
-        const {name, affiliation} = unitInfo;
+        const {name, affiliation, color} = unitInfo;
 
         return (
             <Segment attached="bottom">
@@ -80,7 +80,7 @@ class UnitInfo extends Component {
                     </Form.Field>
                     <Form.Field name="color">
                         <label>Color</label>
-                        <ColorPickerButton value="red" />
+                        <ColorPickerButton value={color} />
                     </Form.Field>
                 </Form>
             </Segment>

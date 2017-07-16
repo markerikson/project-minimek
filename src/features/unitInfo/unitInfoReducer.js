@@ -6,6 +6,7 @@ import {UNIT_INFO_UPDATE} from "./unitInfoConstants";
 const initialState = {
     name : "N/A",
     affiliation : "",
+    color : "blue"
 };
 
 function dataLoaded(state, payload) {
