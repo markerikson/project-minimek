@@ -19,7 +19,7 @@ export class ModalManager extends Component {
             const {modalType, modalProps = {}} = modalDescription;
             const ModalComponent = modalComponentLookupTable[modalType];
 
-            let renderedModal = <ModalComponent {...modalProps} />;
+            let renderedModal = <ModalComponent {...modalProps}  key={modalType + index}/>;
             return renderedModal;
         });
 
