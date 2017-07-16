@@ -13,11 +13,11 @@ const actions = {loadUnitData, openModal};
 class Tools extends Component {
 
     onOpenModalClicked = () => {
-        this.props.openModal("TestModal", {counter : 1});
+        this.props.openModal("ColorPickerDialog");
     }
 
     render() {
-        const {loadUnitData, openModal} = this.props;
+        const {loadUnitData} = this.props;
         
         return (
             <Segment attached="bottom">
