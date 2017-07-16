@@ -3,10 +3,12 @@ import {connect} from "react-redux";
 import Portal from 'react-portal';
 
 import ContextMenu from "./ContextMenu";
+import TestContextMenu from "./TestContextMenu";
 
 import {selectContextMenu} from "./contextMenuSelectors";
 
 const menuTypes = {
+    TestContextMenu
 };
 
 
