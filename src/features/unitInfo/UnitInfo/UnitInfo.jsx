@@ -11,6 +11,7 @@ import {updateUnitInfo} from "../unitInfoActions";
 import {getValueFromEvent} from "common/utils/clientUtils";
 
 import FormEditWrapper from "common/components/FormEditWrapper";
+import ColorPickerButton from "common/components/ColorPickerButton";
 
 const FACTIONS = [
     {value : "cc", text : "Capellan Confederation"},
@@ -48,7 +49,7 @@ class UnitInfo extends Component {
 
     render() {
         const {unitInfo, updateUnitInfo} = this.props;
-        const {name, affiliation} = unitInfo;
+        const {name, affiliation, color} = unitInfo;
 
         return (
             <Segment attached="bottom">
@@ -76,6 +77,10 @@ class UnitInfo extends Component {
                             value={affiliation}
                             onChange={this.onAffiliationChanged}
                         />
+                    </Form.Field>
+                    <Form.Field name="color">
+                        <label>Color</label>
+                        <ColorPickerButton value={color} />
                     </Form.Field>
                 </Form>
             </Segment>
