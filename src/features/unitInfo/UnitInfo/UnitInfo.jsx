@@ -7,10 +7,12 @@ import {
 } from "semantic-ui-react";
 
 import {selectUnitInfo} from "../unitInfoSelectors";
-import {updateUnitInfo} from "../unitInfoActions";
+import {updateUnitInfo, setUnitColor} from "../unitInfoActions";
+import {showColorPicker} from "common/components/ColorPicker/colorPickerActions";
 import {getValueFromEvent} from "common/utils/clientUtils";
 
 import FormEditWrapper from "common/components/FormEditWrapper";
+import ColorPickerButton from "common/components/ColorPicker/ColorPickerButton";
 
 const FACTIONS = [
     {value : "cc", text : "Capellan Confederation"},
@@ -29,6 +31,7 @@ const mapState = (state) => ({
 
 const actions = {
     updateUnitInfo,
+    showColorPicker,
 };
 
 class UnitInfo extends Component {
@@ -45,10 +48,16 @@ class UnitInfo extends Component {
         this.props.updateUnitInfo(newValues);
     }
 
+    onColorClicked = () => {
+        const onColorPickedAction = setUnitColor();
+
+        this.props.showColorPicker(this.props.unitInfo.color, onColorPickedAction);
+    }
+
 
     render() {
         const {unitInfo, updateUnitInfo} = this.props;
-        const {name, affiliation} = unitInfo;
+        const {name, affiliation, color} = unitInfo;
 
         return (
             <Segment attached="bottom">
@@ -75,6 +84,13 @@ class UnitInfo extends Component {
                             options={FACTIONS}
                             value={affiliation}
                             onChange={this.onAffiliationChanged}
+                        />
+                    </Form.Field>
+                    <Form.Field name="color">
+                        <label>Color</label>
+                        <ColorPickerButton
+                            value={color}
+                            onClick={this.onColorClicked}
                         />
                     </Form.Field>
                 </Form>
