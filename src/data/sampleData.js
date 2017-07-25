@@ -2,6 +2,7 @@ const sampleData = {
     unit : {
         name : "Black Widow Company",
         affiliation : "wd",
+        color : "black"
     },
     pilots : [
         {
