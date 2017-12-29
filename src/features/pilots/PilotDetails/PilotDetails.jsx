@@ -8,6 +8,7 @@ import {getEditingEntitiesSession} from "features/editing/editingSelectors";
 import FormEditWrapper from "common/components/FormEditWrapper";
 
 import {selectCurrentPilot, selectIsEditingPilot} from "../pilotsSelectors";
+import {PILOT_RANKS} from "../pilotsConstants";
 
 import {
     startEditingPilot,
@@ -24,15 +25,7 @@ import {editItemAttributes} from "features/editing/editingActions";
 import {getValueFromEvent} from "common/utils/clientUtils";
 
 
-const RANKS = [
-    {value: "Private", text : "Private"},
-    {value: "Corporal", text : "Corporal"},
-    {value: "Sergeant", text : "Sergeant"},
-    {value: "Lieutenant", text : "Lieutenant"},
-    {value: "Captain", text : "Captain"},
-    {value: "Major", text : "Major"},
-    {value: "Colonel", text : "Colonel"},
-];
+const RANKS = PILOT_RANKS.map(rank => ({value : rank, text : rank}));
 
 const SKILL_VALUES = [
     {value : 0, text : 0},
