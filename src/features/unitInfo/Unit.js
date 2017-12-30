@@ -1,4 +1,4 @@
-import {Model, many, attr} from "redux-orm";
+import {Model, many, fk, attr} from "redux-orm";
 
 
 export default class Unit extends Model {
@@ -7,7 +7,7 @@ export default class Unit extends Model {
     static fields = {
         id : attr(),
         name : attr(),
-        affiliation : attr(),
+        affiliation : fk("Faction"),
         color : attr(),
         pilots : many("Pilot"),
         mechs : many("Mech")
