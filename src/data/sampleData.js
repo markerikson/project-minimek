@@ -102,7 +102,7 @@ const sampleData = {
             },
             {
                 id : 9,
-                name : "John Clavell",
+                name : "John 'Gentlemen Johnny' Clavell",
                 rank : "Lieutenant",
                 gunnery : 3,
                 piloting : 4,
