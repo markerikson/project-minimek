@@ -6,7 +6,7 @@ import {
     Segment
 } from "semantic-ui-react";
 
-import {selectUnitInfo} from "../unitInfoSelectors";
+import {selectCurrentUnitInfo} from "../unitInfoSelectors";
 import {updateUnitInfo, setUnitColor} from "../unitInfoActions";
 import {showColorPicker} from "common/components/ColorPicker/colorPickerActions";
 import {getValueFromEvent} from "common/utils/clientUtils";
@@ -23,7 +23,7 @@ const mapState = (state) => {
 
     const factions = Faction.all().toRefArray();
 
-    const unitInfo = selectUnitInfo(state);
+    const unitInfo = selectCurrentUnitInfo(state);
 
     return {
         factions,
@@ -60,7 +60,13 @@ class UnitInfo extends Component {
 
     render() {
         const {unitInfo, updateUnitInfo, factions} = this.props;
-        const {name, affiliation, color} = unitInfo;
+
+        const isDisplayingUnit = Boolean(unitInfo);
+        let name, affiliation, color;
+
+        if(isDisplayingUnit) {
+            ({name, affiliation, color} = unitInfo);
+        }
 
         const displayFactions = factions.map(faction => {
             return {
@@ -83,6 +89,7 @@ class UnitInfo extends Component {
                             <input
                                 placeholder="Name"
                                 name="name"
+                                disabled={!isDisplayingUnit}
                             />
                         </FormEditWrapper>
                     </Form.Field>
@@ -93,6 +100,7 @@ class UnitInfo extends Component {
                             selection
                             options={displayFactions}
                             value={affiliation}
+                            disabled={!isDisplayingUnit}
                             onChange={this.onAffiliationChanged}
                         />
                     </Form.Field>
@@ -100,6 +108,7 @@ class UnitInfo extends Component {
                         <label>Color</label>
                         <ColorPickerButton
                             value={color}
+                            disabled={!isDisplayingUnit}
                             onClick={this.onColorClicked}
                         />
                     </Form.Field>
