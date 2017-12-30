@@ -59,7 +59,7 @@ class UnitInfo extends Component {
 
 
     render() {
-        const {unitInfo, updateUnitInfo, factions} = this.props;
+        const {unitInfo, factions} = this.props;
 
         const isDisplayingUnit = Boolean(unitInfo);
         let name, affiliation, color;
@@ -83,7 +83,7 @@ class UnitInfo extends Component {
                         <FormEditWrapper
                             singleValue={true}
                             value={ {name} }
-                            onChange={updateUnitInfo}
+                            onChange={this.onNameChanged}
                             passIsEditing={false}
                         >
                             <input
