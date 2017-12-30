@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 
 import {
     Grid,
@@ -7,9 +8,34 @@ import {
     List,
 } from "semantic-ui-react";
 
+import {getEntitiesSession} from "features/entities/entitySelectors";
+
 import Lance from "./Lance";
 
-const UnitOrganization = () => {
+const mapState = (state) => {
+    const session = getEntitiesSession(state);
+    const {Unit, Lance} = session;
+
+    let unit;
+
+    const unitModel = Unit.all().first();
+
+    if(unitModel) {
+        unit = unitModel.ref;
+    }
+
+    let lances = Lance.all().toRefArray().map(lance => lance.id);
+
+    return {unit, lances};
+}
+
+const UNKNOWN_UNIT = {name : "Unknown"};
+
+const UnitOrganization = ({unit = UNKNOWN_UNIT, lances = []}) => {
+    const {name} = unit;
+
+    const lanceEntries = lances.map(lanceID => <Lance lanceID={lanceID} />);
+
     return (
         <Segment>
             <Grid>
@@ -19,11 +45,9 @@ const UnitOrganization = () => {
                         <List.Item>
                             <List.Icon name="cubes" />
                             <List.Content>
-                                <List.Header>Black Widow Company</List.Header>
+                                <List.Header>{name}</List.Header>
                                 <List.List>
-                                    <Lance lanceID={1} />
-                                    <Lance lanceID={2} />
-                                    <Lance lanceID={3} />
+                                    {lanceEntries}
                                 </List.List>
                             </List.Content>
                         </List.Item>
@@ -34,4 +58,4 @@ const UnitOrganization = () => {
     )
 }
 
-export default UnitOrganization;
+export default connect(mapState)(UnitOrganization);
