@@ -34,7 +34,7 @@ const UNKNOWN_UNIT = {name : "Unknown"};
 const UnitOrganization = ({unit = UNKNOWN_UNIT, lances = []}) => {
     const {name} = unit;
 
-    const lanceEntries = lances.map(lanceID => <Lance lanceID={lanceID} />);
+    const lanceEntries = lances.map(lanceID => <Lance key={lanceID} lanceID={lanceID} />);
 
     return (
         <Segment>
