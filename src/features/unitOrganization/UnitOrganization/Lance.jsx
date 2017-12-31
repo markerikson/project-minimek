@@ -31,7 +31,7 @@ const UNKNOWN_LANCE =  {name : "Unknown"}
 const Lance = ({lance = UNKNOWN_LANCE, pilots = []}) => {
     const {name} = lance;
 
-    const lancePilots = pilots.map(pilotID => <LancePilot pilotID={pilotID} />);
+    const lancePilots = pilots.map(pilotID => <LancePilot key={pilotID} pilotID={pilotID} />);
 
     return (
         <List.Item>
