@@ -5,7 +5,7 @@ import {
     Header,
 } from "semantic-ui-react";
 
-import UnitOrganizationTree from "../UnitOrganizationTree";
+import UnitOrganizationTree from "../UnitOrganizationTree/UnitOrganizationTree";
 import UnitInfoForm from "./UnitInfoForm";
 
 
