@@ -3,7 +3,9 @@ import {connect} from "react-redux";
 import {
     Form,
     Dropdown,
-    Segment
+    Segment,
+    Grid,
+    Header,
 } from "semantic-ui-react";
 
 import {selectCurrentUnitInfo} from "../unitInfoSelectors";
@@ -15,6 +17,8 @@ import FormEditWrapper from "common/components/FormEditWrapper";
 import ColorPickerButton from "common/components/ColorPicker/ColorPickerButton";
 
 import {getEntitiesSession} from "features/entities/entitySelectors";
+
+import UnitOrganizationTree from "features/unitOrganization/UnitOrganizationTree";
 
 
 const mapState = (state) => {
@@ -77,42 +81,60 @@ class UnitInfo extends Component {
 
         return (
             <Segment attached="bottom">
-                <Form size="large">
-                    <Form.Field name="name" width={6}>
-                        <label>Unit Name</label>
-                        <FormEditWrapper
-                            singleValue={true}
-                            value={ {name} }
-                            onChange={this.onNameChanged}
-                            passIsEditing={false}
-                        >
-                            <input
-                                placeholder="Name"
-                                name="name"
-                                disabled={!isDisplayingUnit}
-                            />
-                        </FormEditWrapper>
-                    </Form.Field>
-                    <Form.Field name="affiliation" width={6}>
-                        <label>Affiliation</label>
-                        <Dropdown
-                            name="affiliation"
-                            selection
-                            options={displayFactions}
-                            value={affiliation}
-                            disabled={!isDisplayingUnit}
-                            onChange={this.onAffiliationChanged}
-                        />
-                    </Form.Field>
-                    <Form.Field name="color">
-                        <label>Color</label>
-                        <ColorPickerButton
-                            value={color}
-                            disabled={!isDisplayingUnit}
-                            onClick={this.onColorClicked}
-                        />
-                    </Form.Field>
-                </Form>
+                <Grid>
+                    <Grid.Column width={10}>
+                        <Header as="h3">Unit Table of Organization</Header>
+                        <Segment>
+                            <UnitOrganizationTree />
+                        </Segment>
+
+                    </Grid.Column>
+                    <Grid.Column width={6}>
+                        <Header as="h3">Edit Unit</Header>
+                        <Segment>
+                            <Form size="large">
+                                <Form.Field name="name" >
+                                    <label>Unit Name</label>
+                                    <FormEditWrapper
+                                        singleValue={true}
+                                        value={ {name} }
+                                        onChange={this.onNameChanged}
+                                        passIsEditing={false}
+                                    >
+                                        <input
+                                            placeholder="Name"
+                                            name="name"
+                                            disabled={!isDisplayingUnit}
+                                        />
+                                    </FormEditWrapper>
+                                </Form.Field>
+                                <Form.Group>
+                                    <Form.Field name="affiliation" width={12}>
+                                        <label>Affiliation</label>
+                                        <Dropdown
+                                            name="affiliation"
+                                            selection
+                                            options={displayFactions}
+                                            value={affiliation}
+                                            disabled={!isDisplayingUnit}
+                                            onChange={this.onAffiliationChanged}
+                                        />
+                                    </Form.Field>
+                                    <Form.Field name="color">
+                                        <label>Color</label>
+                                        <ColorPickerButton
+                                            value={color}
+                                            disabled={!isDisplayingUnit}
+                                            onClick={this.onColorClicked}
+                                        />
+                                    </Form.Field>
+                                </Form.Group>
+
+                            </Form>
+                        </Segment>
+                    </Grid.Column>
+                </Grid>
+
             </Segment>
         );
     }
