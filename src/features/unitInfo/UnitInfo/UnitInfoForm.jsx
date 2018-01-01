@@ -13,7 +13,7 @@ import ColorPickerButton from "common/components/ColorPicker/ColorPickerButton";
 
 import {getEntitiesSession} from "features/entities/entitySelectors";
 
-import {selectUnitInfo} from "../unitInfoSelectors";
+import {selectCurrentUnitInfo} from "../unitInfoSelectors";
 import {updateUnitInfo, setUnitColor} from "../unitInfoActions";
 
 
@@ -24,7 +24,7 @@ const mapState = (state) => {
 
     const factions = Faction.all().toRefArray();
 
-    const unitInfo = selectUnitInfo(state);
+    const unitInfo = selectCurrentUnitInfo(state);
 
     return {
         factions,
@@ -59,8 +59,13 @@ class UnitInfoForm extends Component {
 
 
     render() {
-        const {unitInfo, updateUnitInfo, factions} = this.props;
-        const {name, affiliation, color} = unitInfo;
+        const {unitInfo, factions} = this.props;
+        const isDisplayingUnit = Boolean(unitInfo);
+        let name = "", affiliation = null, color = null;
+
+        if(isDisplayingUnit) {
+            ({name, affiliation, color} = unitInfo);
+        }
 
         const displayFactions = factions.map(faction => {
             return {
@@ -77,12 +82,13 @@ class UnitInfoForm extends Component {
                     <FormEditWrapper
                         singleValue={true}
                         value={ {name} }
-                        onChange={updateUnitInfo}
+                        onChange={this.onNameChanged}
                         passIsEditing={false}
                     >
                         <input
                             placeholder="Name"
                             name="name"
+                            disabled={!isDisplayingUnit}
                         />
                     </FormEditWrapper>
                 </Form.Field>
@@ -94,6 +100,7 @@ class UnitInfoForm extends Component {
                             selection
                             options={displayFactions}
                             value={affiliation}
+                            disabled={!isDisplayingUnit}
                             onChange={this.onAffiliationChanged}
                         />
                     </Form.Field>
@@ -101,6 +108,7 @@ class UnitInfoForm extends Component {
                         <label>Color</label>
                         <ColorPickerButton
                             value={color}
+                            disabled={!isDisplayingUnit}
                             onClick={this.onColorClicked}
                         />
                     </Form.Field>
