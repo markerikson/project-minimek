@@ -7,7 +7,7 @@ import {
 
 import {getEntitiesSession} from "features/entities/entitySelectors";
 
-import Lance from "./UnitOrganization/Lance";
+import Lance from "./Lance";
 
 const mapState = (state) => {
     const session = getEntitiesSession(state);
