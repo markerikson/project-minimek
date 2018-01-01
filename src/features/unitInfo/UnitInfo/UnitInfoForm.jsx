@@ -62,7 +62,7 @@ class UnitInfoForm extends Component {
         return (
             <Form size="large">
 
-                <Form.Field name="name" width={6}>
+                <Form.Field name="name">
                     <label>Unit Name</label>
                     <FormEditWrapper
                         singleValue={true}
@@ -76,23 +76,26 @@ class UnitInfoForm extends Component {
                         />
                     </FormEditWrapper>
                 </Form.Field>
-                <Form.Field name="affiliation" width={6}>
-                    <label>Affiliation</label>
-                    <Dropdown
-                        name="affiliation"
-                        selection
-                        options={FACTIONS}
-                        value={affiliation}
-                        onChange={this.onAffiliationChanged}
-                    />
-                </Form.Field>
-                <Form.Field name="color">
-                    <label>Color</label>
-                    <ColorPickerButton
-                        value={color}
-                        onClick={this.onColorClicked}
-                    />
-                </Form.Field>
+                <Form.Group>
+                    <Form.Field name="affiliation" width={12}>
+                        <label>Affiliation</label>
+                        <Dropdown
+                            name="affiliation"
+                            selection
+                            options={FACTIONS}
+                            value={affiliation}
+                            onChange={this.onAffiliationChanged}
+                        />
+                    </Form.Field>
+                    <Form.Field name="color">
+                        <label>Color</label>
+                        <ColorPickerButton
+                            value={color}
+                            onClick={this.onColorClicked}
+                        />
+                    </Form.Field>
+                </Form.Group>
+
             </Form>
         );
     }
