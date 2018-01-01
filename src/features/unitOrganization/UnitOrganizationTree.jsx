@@ -11,7 +11,7 @@ import Lance from "./UnitOrganization/Lance";
 
 const mapState = (state) => {
     const session = getEntitiesSession(state);
-    const {Unit, Lance, Faction} = session;
+    const {Unit, Lance} = session;
 
     let unit, faction;
 
@@ -30,7 +30,7 @@ const mapState = (state) => {
 const UNKNOWN_UNIT = {name : "Unknown"};
 
 const UnitOrganizationTree = ({unit = UNKNOWN_UNIT, faction = {}, lances = []}) => {
-    const {name, affiliation, color = "white"} = unit;
+    const {name, color = "white"} = unit;
     const {name : factionName} = faction;
 
     const lanceEntries = lances.map(lanceID => <Lance key={lanceID} lanceID={lanceID} />);

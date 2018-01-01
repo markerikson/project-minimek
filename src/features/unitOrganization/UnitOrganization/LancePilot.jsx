@@ -10,7 +10,7 @@ import {getEntitiesSession} from "features/entities/entitySelectors";
 
 const mapState = (state, ownProps) => {
     const session = getEntitiesSession(state);
-    const {Pilot, Mech} = session;
+    const {Pilot} = session;
 
     let pilot, mech;
 

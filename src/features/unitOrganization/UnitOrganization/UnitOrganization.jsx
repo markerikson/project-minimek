@@ -4,7 +4,6 @@ import {
     Grid,
     Segment,
     Header,
-    List,
 } from "semantic-ui-react";
 
 import UnitOrganizationTree from "../UnitOrganizationTree";

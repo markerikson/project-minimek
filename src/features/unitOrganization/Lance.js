@@ -1,4 +1,4 @@
-import {Model, fk, many, attr} from "redux-orm";
+import {Model, many, attr} from "redux-orm";
 
 
 export default class Lance extends Model {
