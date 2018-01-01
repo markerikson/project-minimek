@@ -5,7 +5,7 @@ import {
     Header,
 } from "semantic-ui-react";
 
-import UnitOrganization from "../UnitOrganization";
+import UnitOrganizationTree from "../UnitOrganizationTree";
 import UnitInfoForm from "./UnitInfoForm";
 
 
@@ -18,7 +18,7 @@ class UnitInfo extends Component {
                     <Grid.Column width={10}>
                         <Header as="h3">Unit Table of Organization</Header>
                         <Segment>
-                            <UnitOrganization />
+                            <UnitOrganizationTree />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={6}>
