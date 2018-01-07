@@ -10,6 +10,7 @@ import {
 
 import {
     EDIT_ITEM_EXISTING,
+    EDIT_ITEM_NEW,
     EDIT_ITEM_UPDATE,
     EDIT_ITEM_APPLY,
     EDIT_ITEM_STOP,
@@ -67,6 +68,10 @@ export function updateEditedEntity(sourceEntities, destinationEntities, payload)
             existingItem.updateFrom(model);
         }
     }
+    else {
+        const itemContents = model.toJSON();
+        ModelClass.parse(itemContents);
+    }
 
     // Return the updated "current" relational data.
     return writeSession.state;
@@ -81,6 +86,13 @@ export function editItemExisting(state, payload) {
 
     const updatedEditingEntities = copyEntity(entities, editingEntities, payload);
 
+    return updateEditingEntitiesState(state, updatedEditingEntities);
+}
+
+export function editItemNew(state, payload) {
+    const editingEntities = selectEditingEntities(state);
+
+    const updatedEditingEntities = createEntity(editingEntities, payload);
     return updateEditingEntitiesState(state, updatedEditingEntities);
 }
 
@@ -119,6 +131,7 @@ export function editItemReset(state, payload) {
 
 const editingFeatureReducer = createReducer({}, {
     [EDIT_ITEM_EXISTING] : editItemExisting,
+    [EDIT_ITEM_NEW] : editItemNew,
     [EDIT_ITEM_UPDATE] : editItemUpdate,
     [EDIT_ITEM_APPLY] : editItemApply,
     [EDIT_ITEM_STOP] : editItemStop,
